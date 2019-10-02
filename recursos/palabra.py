@@ -1,8 +1,9 @@
 import nltk
 from nltk.tokenize.toktok import ToktokTokenizer
+from nltk.corpus import stopwords
+from nltk.stem.snowball import SnowballStemmer
 
 def tokenzito(ruta):
-
     # Tokenizador TokTok (palabras)
     toktok = ToktokTokenizer()
     # Tokenizador de oracionesa
@@ -52,13 +53,59 @@ def frecuencia(token): #Funcion para la frecuencia
     for i in range(len(listaPalabra)):
         #Se agrega en la listaGeneral la listaNumero en la pocisión "i" y la listaPalabra en la posición "i"
         listaGeneral.append((listaNumero[i], listaPalabra[i]))
+    listaGeneral.sort(reverse=True)    
     return listaGeneral
 
+#Quita las Palabras 
+def reduccion(token):
+    longitud=len(token)
+    palabrasFuncionales = stopwords.words("spanish")
+    #Lleva el ciclo de la lista
+    contador = 0
+    #Lleva a los indices
+    auxiliar = 0
+    #Mientras hay palabras 
+    while(contador < longitud -1):
+        # IN Regresa verdadero o falso si esta la funcion en la lista palabrasFuncionales
+        if(token[auxiliar] in palabrasFuncionales):
+            #Quita la palabra 
+            token.remove(token[auxiliar])
+            auxiliar = auxiliar - 1
+        contador = contador + 1
+        auxiliar = auxiliar + 1
+    return token
+
+#Distribución de Frecuencias con Stemming 
+# Stemmer en Espanol  ̃
+def stemming(token):
+    listaStemming = []
+    stemmer = SnowballStemmer("spanish")
+    tokens = token # <- aquı va el texto tokenizado
+    
+    for t in tokens:
+        #Obtener la raiz
+        #print(stemmer.stem(t))
+        listaStemming.append(stemmer.stem(t))
+    return listaStemming
 
 #Para probar la función frecuencia
-tokens = tokenzito("practica3.txt")
-print(frecuencia(tokens))
+#tokens = tokenzito("practica3.txt")
+#print(frecuencia(tokens))
 
 #Para probar la función tokenzito
 #token = tokenzito('practica3.txt')
 #print(token)
+
+#Para probar la función reduccion 
+#tokens = tokenzito("practica3.txt")
+#print(reduccion(tokens))
+
+#Para probar la funcion Steamming 
+#tokens = tokenzito("practica3.txt")
+#print(stemming(tokens))
+
+#Para imprimmir las frecuencias en orden decreciente
+tokens = tokenzito("practica3.txt")
+reducir = reduccion(tokens)
+cortadas = stemming(reducir)
+print(frecuencia(cortadas))
