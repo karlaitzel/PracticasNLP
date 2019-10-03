@@ -76,7 +76,7 @@ def reduccion(token):
     return token
 
 #Distribución de Frecuencias con Stemming 
-# Stemmer en Espanol  ̃
+#Stemmer en Espanol  ̃
 def stemming(token):
     listaStemming = []
     stemmer = SnowballStemmer("spanish")
@@ -87,6 +87,34 @@ def stemming(token):
         #print(stemmer.stem(t))
         listaStemming.append(stemmer.stem(t))
     return listaStemming
+
+#Lemmatizar 
+def lematizar(ruta,token):
+    listaIzq=[]
+    listaDer=[]
+    resultado=[]
+
+    #divide el archivo en dos columnas 
+    with open (ruta, 'r') as file: #ass fp:
+      texto=file.read()
+      archivo = texto.split()
+      for i in range (len(archivo)):
+        #El residuo de la división es 0
+        if(i%2==0):
+            listaDer.append(archivo[i])
+        else: 
+            listaIzq.append(archivo[i]) 
+      for i in token:
+        if (i in listaDer):
+            indice = listaDer.index(i)
+            resultado.append(listaIzq[indice])
+        else: 
+            resultado.append(i)
+      return resultado 
+
+#Corrector Ortográfico simple
+
+      
 
 #Para probar la función frecuencia
 #tokens = tokenzito("practica3.txt")
@@ -105,7 +133,15 @@ def stemming(token):
 #print(stemming(tokens))
 
 #Para imprimmir las frecuencias en orden decreciente
-tokens = tokenzito("practica3.txt")
-reducir = reduccion(tokens)
-cortadas = stemming(reducir)
-print(frecuencia(cortadas))
+#tokens = tokenzito("practica3.txt")
+#reducir = reduccion(tokens)
+#cortadas = stemming(reducir)
+#print(frecuencia(cortadas))
+
+#Para probar la Lematización 
+tokens1 = 'lemmatization-es.txt'
+tokens = tokenzito('practica3.txt')
+print(lematizar(tokens1, tokens))
+
+
+
