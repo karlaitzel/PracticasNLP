@@ -21,13 +21,14 @@ def corrector(ruta1, ruta2):
   #Ciclo para recorrer las palabras del diccionario 
   for j in range(len(diccionario)):
    #Obtener la distancia de Levenshtine
-   distancia = edit_distance(txtMal[i], diccionario[j], False)
+   distancia = edit_distance(txtMal[i], diccionario[j], 1, False)
    #Si la distancia es menor a la variable
    if(distancia < var):
     #Cambiar var sea iguala. distancia
     var = distancia
     palabra = diccionario[j]
   #Guardar en la lista la palabra que se encuentra en la posición j del diccionario en la lista que esta Bien
+  var = 20
   txtBien.append(palabra)
   print(i)
  #Guardar la palabra separada por un espacio en un nuevo archivo 
@@ -40,5 +41,6 @@ def corrector(ruta1, ruta2):
 # archivo2 = "listado-general.txt"
 # print
 corrector("corrigeme.txt","listado-general.txt")
+
 
 
